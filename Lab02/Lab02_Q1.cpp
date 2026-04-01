@@ -7,7 +7,7 @@ int stepCount = 0;
 int findMax(const vector<int>& arr) {
  
   int max = arr[0];
-  stepCount++//Assignments:1
+  stepCount++;//Assignments:1
   
   
   stepCount++;//loop initialization-i=1:1
