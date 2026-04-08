@@ -24,8 +24,8 @@ void push(const Card& card) {
 stack.push_back(card); //將 card 加入 stack 的末尾
 }
 Card pop() {
-if (!stack.empty()) {
-Card card = stack.back();
+if (!stack.empty()) { //檢查 stack 是否為空
+Card card = stack.back();  //
 stack.pop_back();
 return card;
 }
@@ -66,7 +66,7 @@ void shuffleDeck() {
 }
 //發牌
 void drawAllCards() {
-    while (!shuffledDeck.isEmpty()) {
+    while (!shuffledDeck.isEmpty()) { //判斷 shuffledDeck 是否還有值,如果不是空的就重複執行迴圈
     Card card = shuffledDeck.pop(); //從 shuffledDeck 中取出一張牌
         card.display(); //顯示這張牌的資訊
     }
