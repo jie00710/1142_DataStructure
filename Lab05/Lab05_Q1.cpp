@@ -20,18 +20,18 @@ private:
 vector<Card> stack; //表示 stack 是一個能存放 Card 類別物件的 vector
 
 public:
-void push(const Card& card) {
+void push(const Card& card) { //push函式
 stack.push_back(card); //將 card 加入 stack 的末尾
 }
-Card pop() {
-if (!stack.empty()) { //檢查 stack 是否為空
-Card card = stack.back();  //
-stack.pop_back();
-return card;
+Card pop() { //pop函式
+if (!stack.empty()) { //檢查 stack 是否為空，若不為空則執行下列程式
+        Card card = stack.back();  //暫存stack中最頂端的元素 
+        stack.pop_back(); //使用vector內的pop函式移除該元素並將top-1
+        return card; //回傳剛剛暫存的元素
 }
-throw invalid_argument("Stack is empty");
+throw invalid_argument("Stack is empty");//若stack為空，則丟出stack is empty訊息，並跳出副程式
 }
-bool isEmpty() const {
+bool isEmpty() const { //如果讀取到的值是 isEmpty = True，則回傳stack.emoty()
 return stack.empty();
 }
 };
@@ -56,11 +56,11 @@ cards.push_back(Card(colors[i], ranks[j]));
 }
 //洗牌(Hint:使用 shuffle 函數)
 void shuffleDeck() {
-        random_device rd;
-        mt19937 g(rd());
-        shuffle(cards.begin(), cards.end(), g);
+        random_device rd; //確保順序隨機
+        mt19937 g(rd()); //隨機數產生器
+        shuffle(cards.begin(), cards.end(), g); //接收card的起點與終點，並打亂順序
 
-        for (int i = 0; i < cards.size(); i++) {
+        for (int i = 0; i < cards.size(); i++) { //將排重新放回stack
             shuffledDeck.push(cards[i]);
         }
 }
@@ -78,5 +78,5 @@ int main() {
     deck.shuffleDeck(); //進行洗牌並放入堆疊
     cout << "Shuffled deck:" << endl;
     deck.drawAllCards(); //依序取出堆疊內的牌並顯示
-    return 0;
+    return 0; //回傳0，表示程式正常結束
 }
