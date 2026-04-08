@@ -8,13 +8,12 @@ class Card {
 public:
 string colors; //儲存撲克牌的花色
 string rank; //儲存撲克牌的數值
-Card(string s, string r) : colors(s), rank(r) {} //建立 constructor
-來初始化物件,當 Card 物件建立時,它會自動執行這個函式,並把 s 和 r 的值存入
-colors 和 rank
+Card(string s, string r) : colors(s), rank(r) {} //建立 constructor來初始化物件,當 Card 物件建立時,它會自動執行這個函式,並把 s 和 r 的值存入colors 和 rank
 void display() const { //顯示撲克牌的資訊
 cout << rank << " of " << colors << endl;
 }
 };
+
 // 實作 Stack
 class Stack {
 private:
@@ -22,10 +21,18 @@ vector<Card> stack; //表示 stack 是一個能存放 Card 類別物件的 vecto
 
 public:
 void push(const Card& card) {
+stack.push_back(card); //將 card 加入 stack 的末尾
 }
 Card pop() {
+if (!stack.empty()) {
+Card card = stack.back();
+stack.pop_back();
+return card;
+}
+throw invalid_argument("Stack is empty");
 }
 bool isEmpty() const {
+return stack.empty();
 }
 };
 
@@ -49,15 +56,27 @@ cards.push_back(Card(colors[i], ranks[j]));
 }
 //洗牌(Hint:使用 shuffle 函數)
 void shuffleDeck() {
+        random_device rd;
+        mt19937 g(rd());
+        shuffle(cards.begin(), cards.end(), g);
+
+        for (int i = 0; i < cards.size(); i++) {
+            shuffledDeck.push(cards[i]);
+        }
 }
 //發牌
 void drawAllCards() {
+    while (!shuffledDeck.isEmpty()) {
+    Card card = shuffledDeck.pop(); //從 shuffledDeck 中取出一張牌
+        card.display(); //顯示這張牌的資訊
+    }
 }
 };
+
 int main() {
-Deck deck; //建立 deck 產生 52 張撲克牌
-deck.shuffleDeck(); //進行洗牌並放入堆疊
-cout << "Shuffled deck:" << endl;
-deck.drawAllCards(); //依序取出堆疊內的牌並顯示
-return 0;
+    Deck deck; //建立 deck 產生 52 張撲克牌
+    deck.shuffleDeck(); //進行洗牌並放入堆疊
+    cout << "Shuffled deck:" << endl;
+    deck.drawAllCards(); //依序取出堆疊內的牌並顯示
+    return 0;
 }
