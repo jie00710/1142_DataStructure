@@ -47,14 +47,44 @@ public:
 
 // 判斷運算子(加減乘除) 的優先順序
 int precedence(char op) {
-    
-   
+    if (op == '*' || op == '/') {
+        return 2;
+    } else if (op == '+' || op == '-') {
+        return 1;
+    }
+    return -1; // 其他字符的優先順序為 -1
 }
 
 // 將中序表達式 (infix) 轉換為後序表達式 (postfix)
 void InfixToPostfix(const char* infix, char* postfix) {
+    Stack s; // 創建堆疊
+    int j = 0; // 後序表達式的索引
 
-  
+    for (int i = 0; infix[i] != '\0'; i++) {
+        char ch = infix[i];
+
+        if (isalnum(ch)) { // 如果是操作數，直接加入後序表達式
+            postfix[j++] = ch;
+        } else if (ch == '(') { // 左括號入堆疊
+            s.push(ch);
+        } else if (ch == ')') { // 遇到右括號，彈出直到左括號
+            while (!s.isEmpty() && s.peek() != '(') {
+                postfix[j++] = s.pop();
+            }
+            s.pop(); // 彈出左括號
+        } else { // 運算子
+            while (!s.isEmpty() && precedence(s.peek()) >= precedence(ch)) {
+                postfix[j++] = s.pop();
+            }
+            s.push(ch); // 將當前運算子入堆疊
+        }
+    }
+
+    // 彈出堆疊中剩餘的運算子
+    while (!s.isEmpty()) {
+        postfix[j++] = s.pop();
+    }
+    postfix[j] = '\0'; // 結束後序表達式字符串
 }
 
 int main() {
