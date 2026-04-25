@@ -48,9 +48,9 @@ public:
 // 判斷運算子(加減乘除) 的優先順序
 int precedence(char op) {
     if (op == '*' || op == '/') {
-        return 2;
+        return 2; // 乘除的優先順序為 2
     } else if (op == '+' || op == '-') {
-        return 1;
+        return 1; // 加減的優先順序為 1
     }
     return -1; // 其他字符的優先順序為 -1
 }
@@ -61,27 +61,27 @@ void InfixToPostfix(const char* infix, char* postfix) {
     int j = 0; // 後序表達式的索引
 
     for (int i = 0; infix[i] != '\0'; i++) {
-        char ch = infix[i];
+        char ch = infix[i];// 讀取當前字符
 
-        if (isalnum(ch)) { // 如果是操作數，直接加入後序表達式
+        if (isalnum(ch)) { // 如果是Operand，直接加入後序表達式
             postfix[j++] = ch;
-        } else if (ch == '(') { // 左括號入堆疊
+        } else if (ch == '(') { // 左括號push進stack
             s.push(ch);
-        } else if (ch == ')') { // 遇到右括號，彈出直到左括號
+        } else if (ch == ')') { // 遇到右括號，pop出stack中的元素直到左括號
             while (!s.isEmpty() && s.peek() != '(') {
                 postfix[j++] = s.pop();
             }
-            s.pop(); // 彈出左括號
-        } else { // 運算子
-            while (!s.isEmpty() && precedence(s.peek()) >= precedence(ch)) {
+            s.pop(); // pop出左括號
+        } else { // 遇到operator，將stack中優先順序較高或相同的operator pop出來
+            while (!s.isEmpty() && precedence(s.peek()) >= precedence(ch)) { // 比較順序
                 postfix[j++] = s.pop();
             }
-            s.push(ch); // 將當前運算子入堆疊
+            s.push(ch); // 將當前運算子push進stack
         }
     }
 
-    // 彈出堆疊中剩餘的運算子
-    while (!s.isEmpty()) {
+    // 彈出堆疊中剩餘的元素
+    while (!s.isEmpty()) { 
         postfix[j++] = s.pop();
     }
     postfix[j] = '\0'; // 結束後序表達式字符串
