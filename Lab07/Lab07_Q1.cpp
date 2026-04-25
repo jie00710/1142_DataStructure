@@ -76,7 +76,7 @@ void InfixToPostfix(const char* infix, char* postfix) {
             while (!s.isEmpty() && precedence(s.peek()) >= precedence(ch)) { // 比較順序
                 postfix[j++] = s.pop();
             }
-            s.push(ch); // 將當前運算子push進stack
+            s.push(ch); // 將當前讀取的元素 push進stack
         }
     }
 
