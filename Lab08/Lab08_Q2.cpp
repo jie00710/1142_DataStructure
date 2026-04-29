@@ -57,21 +57,21 @@ public:
    //尋找root的左子樹最大值
     int findMaxLeftSubtree(TreeNode* node) {
         if (node == nullptr || node->left == nullptr) {
-            return -1; // 如果沒有左子樹，返回最小整數
+            return -1; // 如果沒有左子樹，返回-1
         }
         return findMax(node->left); // 在左子樹中尋找最大值
     }
     //尋找root的右子樹最大值
     int findMaxRightSubtree(TreeNode* node) {
         if (node == nullptr || node->right == nullptr) {
-            return -1; // 如果沒有右子樹，返回最小整數
+            return -1; // 如果沒有右子樹，返回-1
         }
         return findMax(node->right); // 在右子樹中尋找最大值
     }
     // 在子樹中尋找最大值的輔助函數
     int findMax(TreeNode* node) {
         if (node == nullptr) {
-            return -1; // 如果節點為空，返回最小整數
+            return -1; // 如果節點為空，返回-1
         }
         int leftMax = findMax(node->left); // 左子樹最大值 
         int rightMax = findMax(node->right); // 右子樹最大值
