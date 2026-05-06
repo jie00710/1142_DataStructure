@@ -72,7 +72,7 @@ private:
         else{
             // 找到要刪除的節點
             if (node->left == nullptr) {
-                TreeNode* temp = node->right; // 只有右子樹或沒有子樹
+                TreeNode* temp = node->right; // 只有右子樹
                 delete node; // 刪除當前節點
                 return temp; // 回傳新的子樹根節點
             }
@@ -86,8 +86,10 @@ private:
                 TreeNode* temp = findMin(node->right);
                 node->data = temp->data; // 替換資料
                 node->right = deleteNode(node->right, temp->data); // 刪除右子樹中的最小值節點
+                return node; // 回傳更新後的節點
             }
         }
+
         return node; // 回傳更新後的節點
     }
 
