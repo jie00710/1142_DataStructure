@@ -52,15 +52,22 @@ public:
 
         // if判斷式，檢查左子節點是否為有效範圍且比當前節點(父節點)大
 		//如果判斷式成立，把largest設為left
-
+        if (left < heap.size() && heap[left] > heap[largest]) {
+            largest = left;
+        }
 
         // if判斷式，檢查右子節點是否為有效範圍且比當前節點(父節點)大
         //如果判斷式成立，把largest設為right
-
+        if (right < heap.size() && heap[right] > heap[largest]) {
+            largest = right;
+        }
 
         // if判斷式，如果最大的不是父節點，交換並繼續堆化                   
         // 遞迴處理受影響的子樹
-        
+        if (largest != i) {
+            swap(heap[i], heap[largest]);
+            heapify(largest);
+        }
     }
 
     // 顯示Heap的內容(使用BFS)
