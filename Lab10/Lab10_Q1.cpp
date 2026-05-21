@@ -32,12 +32,14 @@ vector<int> readFromFile(const string& filename) {
     return arr;
 }
 
-class MaxHeap {
+//class MaxHeap {
+class MinHeap{
 public:
-    vector<int> heap; // 儲存Max Heap的元素
+    vector<int> heap; // 儲存Min Heap的元素
 
     // 建立Max Heap
-    void buildMaxHeap(vector<int>& arr) {  //建立Max Heap
+    //void buildMaxHeap(vector<int>& arr) {  //建立Max Heap
+    void buildMinHeap(vector<int>& arr) {
         heap = arr;
 
         for (int i = (heap.size() / 2) - 1; i >= 0; i--) { // 從最後一個非葉子節點開始向上執行Max Heap
@@ -46,27 +48,40 @@ public:
     }
 
     void heapify(int i) {// 堆化函式（確保以 i 為根的子樹符合Max Heap性質）
-        int largest = i;          // 假設當前節點是最大的
+        //int largest = i;          // 假設當前節點是最大的
+        int smallest = i;         //假設當前節點是最小的
         int left = 2 * i + 1;     // 左子節點索引
         int right = 2 * i + 2;    // 右子節點索引
 
         // if判斷式，檢查左子節點是否為有效範圍且比當前節點(父節點)大
 		//如果判斷式成立，把largest設為left
-        if (left < heap.size() && heap[left] > heap[largest]) {
+        /*if (left < heap.size() && heap[left] > heap[largest]) {
             largest = left;
         }
+        */
+            if (left < heap.size() && heap[left] < heap[smallest]) {
+                smallest = left;
+            }
 
         // if判斷式，檢查右子節點是否為有效範圍且比當前節點(父節點)大
         //如果判斷式成立，把largest設為right
-        if (right < heap.size() && heap[right] > heap[largest]) {
+        /*if (right < heap.size() && heap[right] < heap[smallest]) {
             largest = right;
-        }
+        }*/
+       if (right < heap.size() && heap[right] < heap[smallest]) {
+            smallest = right;
+       }
+
 
         // if判斷式，如果最大的不是父節點，交換並繼續堆化                   
         // 遞迴處理受影響的子樹
-        if (largest != i) {
+        /*if (largest != i) {
             swap(heap[i], heap[largest]);
             heapify(largest);
+        }*/
+        if (smallest != i) {
+            swap(heap[i], heap[smallest]);
+            heapify(smallest);
         }
     }
 
@@ -81,7 +96,7 @@ public:
 
 int main() {
     // 從文件讀取輸入元素
-    string filename = "/workspaces/1142_DataStructure/Lab10/input1.txt";//請貼上input檔案的正確路徑
+    string filename = "/workspaces/1142_DataStructure/Lab10/input3.txt";//請貼上input檔案的正確路徑
     vector<int> arr = readFromFile(filename);//讀取數據
     
     if (arr.empty()) {// 如果數據為空
@@ -94,12 +109,14 @@ int main() {
     }
     cout << endl;
 
-    MaxHeap maxHeap;// 創建Max Heap對象
-    maxHeap.buildMaxHeap(arr); // 建立Max Heap
+    MinHeap minHeap;// 創建Min Heap對象
+    minHeap.buildMinHeap(arr); // 建立Min Heap
 
-    // 輸出Max Heap的內容
-    cout << "Max Heap: ";
-    maxHeap.printHeap();
+    // 輸出Min Heap的內容
+    /*cout << "Max Heap: ";
+    maxHeap.printHeap();*/
+    cout << "Min Heap: ";
+    minHeap.printHeap();
     cout << endl;
 
     system("pause");
