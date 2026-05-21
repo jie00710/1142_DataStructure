@@ -81,7 +81,7 @@ public:
 
 int main() {
     // 從文件讀取輸入元素
-    string filename = "";//請貼上input檔案的正確路徑
+    string filename = "/workspaces/1142_DataStructure/Lab10/input1.txt";//請貼上input檔案的正確路徑
     vector<int> arr = readFromFile(filename);//讀取數據
     
     if (arr.empty()) {// 如果數據為空
