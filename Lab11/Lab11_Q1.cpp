@@ -71,7 +71,7 @@ public:
             if (current->right) q.push(current->right);// 將右子節點的指標加入queue
         }
     }
-    int getHeight(TreeNode* root) {
+    int getHeight(TreeNode* root) { // 計算樹高
         if (root == nullptr) return 0; // 空樹高度為 0
         int leftHeight = getHeight(root->left);// 左子樹高度
         int rightHeight = getHeight(root->right);// 右子樹高度
@@ -79,10 +79,10 @@ public:
     }
     int sumAtLayer(TreeNode* root, int layer) {
         if (layer <= 0) {
-            return 0; // 保護式編程：無效層號直接返回 0
+            return 0; // 保護：無效層號直接返回 0
         }
         if (root == nullptr) return 0; // 空樹返回 0
-        if(layer > getHeight(root)) {
+        if(layer > getHeight(root)) { // 超過樹高顯示訊息並返回 0
         cout <<"The layer exceeds the tree height." << endl;
         return 0;
         }
@@ -96,12 +96,12 @@ public:
             tie(node, level) = q.front();
             q.pop();
 
-            if (level == layer) {
-                sum += node->value;
+            if (level == layer) { // 當前節點在目標層
+                sum += node->value; // 累加節點值
             }
-            if (level < layer) {
-                if (node->left) q.push({node->left, level + 1});
-                if (node->right) q.push({node->right, level + 1});
+            if (level < layer) { // 只有當前層小於目標層才繼續添加子節點
+                if (node->left) q.push({node->left, level + 1}); // 將左子節點和層號加入queue
+                if (node->right) q.push({node->right, level + 1}); // 將右子節點和層號加入queue
             }
         }
         cout << "Sum at layer " << layer-1 << ": " << sum << endl;
