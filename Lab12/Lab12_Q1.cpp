@@ -55,7 +55,7 @@ void quickSort(vector<Product>& products, int left, int right)
 
 
 int main() {
-    ifstream infile("input1.txt");
+    ifstream infile("input3.txt");
     if (!infile) {
         cerr << "無法打開檔案" << endl;
         return 1;
@@ -63,12 +63,20 @@ int main() {
 
     int N;
     infile >> N;
-    infile.ignore(); // 忽略換行
+    string dummy;
+    getline(infile, dummy); // 忽略 N 所在行剩餘內容（支援 CRLF）
+
     // 讀取商品資料(名稱、有效期限、熱銷程度)
     vector<Product> products;
     for (int i = 0; i < N; ++i) {
         string line;
-        getline(infile, line);
+        if (!getline(infile, line)) {
+            break;
+        }
+        if (line.empty()) {
+            --i;
+            continue;
+        }
         
         // 從後往前提取最後兩個數字
         istringstream iss(line);
@@ -79,7 +87,10 @@ int main() {
             tokens.push_back(word);
         }
         
-        if (tokens.size() < 3) continue;
+        if (tokens.size() < 3) {
+            --i;
+            continue;
+        }
         
         int popularity = stoi(tokens[tokens.size() - 1]);
         int expiry = stoi(tokens[tokens.size() - 2]);
